@@ -10,6 +10,7 @@ import ListProduct from "./pages/listproduct";
 import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import { BrowserRouter,Routes,Route } from "react-router-dom";
+import Footer from "./component/footer";
 const App =()=> {
   return (
     <>
@@ -24,10 +25,12 @@ const App =()=> {
       <Navbar />
       <Searchbar />
       <Storytech />
-      
       <ListProduct />
       <hr className="ml-[25%] border-t-2 border-gray-300  mt-[10%]" />
-      <ListProduct /></>}/>
+      <ListProduct />
+      <Footer/>
+      </>}
+      />
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<SignUp/>}/>
 
