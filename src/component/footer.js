@@ -44,7 +44,7 @@ const options = [
 function Footer() {
   
     return (
-        <footer className="bg-white p-8 mt-[10%]">
+        <footer className="bg-white p-8 mt-[100%]">
           <div className="container mx-auto grid grid-cols-1 md:grid-cols-6 gap-8">
             <div className="col-span-2">
               <h3 className="text-xl font-bold mb-4">

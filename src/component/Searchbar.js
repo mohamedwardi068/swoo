@@ -2,12 +2,12 @@ import React from 'react';
 
 function Searchbar() {
   return (
-    <div className="flex flex-col lg:flex-row items-center bg-blue-900 p-4 justify-between">
+    <div className="flex flex-col lg:flex-row items-center bg-green-500 p-4 justify-between">
       <div className="w-full lg:w-1/2 flex mb-4 lg:mb-0">
         <div className="flex items-center bg-white p-2 rounded-full w-full lg:w-3/4">
           <select className="border-none outline-none p-2 font-bold">
             <option value="all-categories">All Categories</option>
-          
+
           </select>
           <input
             type="text"

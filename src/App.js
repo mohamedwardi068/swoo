@@ -11,28 +11,18 @@ import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Footer from "./component/footer";
+import ListBestseller from "./pages/listbestsellers";
+import Path from "./component/path";
 const App =()=> {
   return (
     <>
       
       <BrowserRouter>
 
-        
-
-        
         <Routes >
-        <Route index element={<><Header />
-      <Navbar />
-      <Searchbar />
-      <Storytech />
-      <ListProduct />
-      <hr className="ml-[25%] border-t-2 border-gray-300  mt-[10%]" />
-      <ListProduct />
-      <Footer/>
-      </>}
-      />
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
+        <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><hr className="ml-[25%] border-t-2 border-gray-300  mt-[12%] mb-[2%]" /><ListProduct /><Footer/></>}/>
+        <Route path="/login" element={<><Header/><Navbar/><Searchbar/><Path/><Login/><Footer/></>}/>
+        <Route path="/signup" element={<><Header/><Navbar/><Searchbar/><SignUp/><Footer/></>}/>
 
         </Routes>
 

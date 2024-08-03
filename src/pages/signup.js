@@ -1,95 +1,108 @@
 import React, { useState } from 'react';
-import { FaFacebook, FaInstagram, FaTwitter, FaBars, FaPhone, FaEnvelope, FaUser } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-const SignUp = () => {
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
-    const Navigate=useNavigate()
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-    return (
-        <div className="flex h-screen">
-            <div
-                className="w-1/2 bg-cover bg-center relative"
-                style={{
-                    backgroundImage: 'url(https://s3-alpha-sig.figma.com/img/bf74/0992/fcc730a1999fdc3467b89ea1c32158d6?Expires=1722816000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Lp8tfz5OwD3cZ7wcgClUgXXj0NPEBMVV8iJrfszbEcLVblbQwWZvQS9BhS5uNPTknCT-m0Imx8GCnSU3tG2pdWU9kEToGQcxjm3RB78udLWZnQj8eUa3XfPRrbAd7ed1d5bj9emCNKMfBKOwUap0bYDQQ77Oge5byE3vj2-NT3myttU4ar7uAoVeQaDvZVJsDwHzssldi5icSVZOu9At-sYH3K437~pfQO~~PoAwdqx5q0h5WK6Ie94AqdcoisQ2ISOpBoFBPUMF-FZaZ~xWQX65mSPvM7JAyUQbpQk1a93mH7~QGnItqGxuv~YyzUAr1EvJwhp~ieOSNNL2MBqZoQ__)'
-                }}
-            >
-                <div className="absolute inset-0 bg-black opacity-50"></div>
-                <div className="absolute inset-0 flex flex-col justify-between text-white p-4">
-                    <div className="w-full flex justify-between">
-                        <button className="text-2xl flex items-center space-x-2">
-                            <FaBars />
-                            <span>Menu</span>
-                        </button>
-                    </div>
-                    <div className="flex flex-col items-center justify-center flex-grow">
-                        {/* <img alt="Logo" className="mb-4" style={{ maxWidth: '150px' }} /> */}
-                        <div className="text-3xl font-bold">Book Shop</div>
-                    </div>
-                    <div className="flex space-x-4 mt-4 items-center justify-center">
-                        <a   className="text-2xl"><FaFacebook /></a>
-                        <a  className="text-2xl"><FaTwitter /></a>
-                        <a  className="text-2xl"><FaInstagram /></a>
-                    </div>
-                </div>
-            </div>
-            <div className="w-1/2 flex items-center justify-center">
-                <div className="w-3/4">
-                    <h1 className="text-3xl mb-6">Sign Up</h1>
-                    <p className="mb-4">Please fill your information below</p>
-                    <div className="mb-4 relative">
-                        <div className="flex items-center p-4 border rounded relative transition-all duration-300 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline-blue">
-                            <FaUser className="text-gray-500 mr-4" />
-                            <input
-                                type="text"
-                                placeholder=" "
-                                className="w-full border-none outline-none"
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                            />
-                            <label className={`absolute left-10 transform transition-all duration-300 ${name ? '-translate-y-6 text-sm' : 'translate-y-0 text-base text-gray-500'}`}>Name</label>
-                        </div>
-                    </div>
-                    <div className="mb-4 relative">
-                        <div className="flex items-center p-4 border rounded relative transition-all duration-300 border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline-blue">
-                            <FaPhone className="text-gray-500 mr-4" />
-                            <input
-                                type="text"
-                                placeholder=" "
-                                className="w-full border-none outline-none"
-                                value={phone}
-                                onChange={(e) => setPhone(e.target.value)}
-                            />
-                            <label className={`absolute left-10 transform transition-all duration-300 ${phone ? '-translate-y-6 text-sm' : 'translate-y-0 text-base text-gray-500'}`}>Mobile number</label>
-                        </div>
-                    </div>
-                    <div className="mb-6 relative">
-                        <div className="flex items-center p-4 border rounded relative transition-all border-gray-300 focus-within:border-blue-600 focus-within:shadow-outline-blue">
-                            <FaEnvelope className="text-gray-500 mr-4" />
-                            <input
-                                type="email"
-                                placeholder=" "
-                                className="w-full border-none outline-none"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <label className={`absolute left-10 transform transition-all duration-300 ${email ? '-translate-y-6 text-sm' : 'translate-y-0 text-base text-gray-500'}`}>E-mail</label>
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-between mb-6">
-                        <a  className="text-black"></a>
-                        <button className="bg-blue-500 text-white py-2 px-4 rounded-lg w-[125px] h-[50px]">Next &gt;</button>
-                    </div>
-                    <hr className="my-5" />
-                    <div className="flex items-center justify-between mb-6">
-                        <a   className="text-black">Already have an account</a>
-                        <button className="text-blue-500 py-2 px-4 rounded" onClick={()=>{Navigate("/login")}}>Login to your account</button>
-                    </div>
-                </div>
-            </div>
+function SignUp() {
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  return (
+    <div className="flex justify-center items-start pt-24 bg-gray-100 h-screen">
+      <div className="bg-white shadow-md rounded-lg h-[695.89px] w-[1360px] flex justify-center items-center ">
+        <div className="hidden md:flex w-1/2 items-center justify-center">
+          <img
+            src="https://s3-alpha-sig.figma.com/img/ec69/a4e4/6c21d583fca24d9604b381d37a07ab34?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hZAZxzLZ3P4fe3IWZeiVPSOuPoEcwfdMUlDZJhufwuLqTbjh~p0fL6LnUrInhyHfCAN6G-IBWmLTMKkj5DIiBJ3upB48e1vZ9zhutYJ4mTYu8g8Mpxaqv5ZKyPQjCPc8yYe20wCPEVSABQxgUM9o1aVQ70BUWoI3T290b4WEjgku~fQPw6L~F2vh~U6iRCaUabHkuOPgOUHZtTCRVaOrRcjSDJCBbprTgT4GdpN-NQZJpHEJW49hV~N9hPLdgXo-B~q6IMrQQJCtDybVrFBkUevXP53bv1q3kw2ZcvOgCW1N6GrF0bTneZcx7ZggXl8Kji8ZdDFkfJmebXikKDudbg__"
+            alt="Register Illustration"
+            className="w-3/4"
+          />
         </div>
-    );
+        <div className="w-full md:w-1/2 flex flex-col p-8">
+          <h2 className="text-4xl font-bold text-green-500 mb-4">Register</h2>
+          <p className="text-gray-400 mb-8 text-xl">JOIN TO US</p>
+          <form className="w-full">
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
+                Your name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
+                type="text"
+                placeholder="Jhon Deo"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+                Email Address
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
+                type="email"
+                placeholder="Example@gmail.com"
+              />
+            </div>
+            <div className="mb-6 relative">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                Password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="********"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                <button type="button" onClick={togglePasswordVisibility}>
+                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
+            <div className="mb-6 relative">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirm-password">
+                Confirm Password
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                id="confirm-password"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="********"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                <button type="button" onClick={toggleConfirmPasswordVisibility}>
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                type="button"
+              >
+                REGISTER
+              </button>
+            </div>
+          </form>
+          <p className="text-gray-600 text-sm mt-4">
+            ALREADY USER? <a href="#" className="text-green-500 hover:text-green-800">LOGIN</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default SignUp;
