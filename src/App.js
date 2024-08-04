@@ -24,7 +24,7 @@ const App =()=> {
 
         <Routes >
         {/* <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><hr className="ml-[25%] border-t-2 border-gray-300  mt-[12%] mb-[2%]" /><ListProduct /><hr className="  border-0 mt-[5%] mb-[2%]" /><Footer/></>}/> */}
-        <Route index element={<><Header /><Navbar /><Searchbar /><Form/> <Location/><Footer/></>}/>
+        <Route index element={<><Header /><Navbar /><Searchbar /><Form/> <Footer/></>}/>
         <Route path="/login" element={<><Header/><Navbar/><Searchbar/><Path/><Login/><Footer/></>}/>
         <Route path="/signup" element={<><Header/><Navbar/><Searchbar/><Path/><SignUp/><Footer/></>}/>
         <Route path="/profile" element={<><Header/><Navbar/><Searchbar/><Profile/><Footer/></>}/>
