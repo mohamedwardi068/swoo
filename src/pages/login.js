@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 function Loginn() {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -10,9 +12,9 @@ function Loginn() {
   };
 
   return (
-    <div className="flex justify-center items-start pt-24 bg-gray-100 h-screen">
-      <div className="bg-white shadow-md rounded-lg h-[523.39px] w-[1360px] flex justify-center items-center">
-        <div className="hidden md:flex w-1/2 items-center justify-center">
+    <div className="flex justify-center items-center md:items-start pt-12 md:pt-24 bg-gray-100 h-screen">
+      <div className="bg-white shadow-md rounded-lg h-auto md:h-[523.39px] w-[90%] md:w-[1360px] flex flex-col md:flex-row justify-center items-center p-4">
+        <div className="hidden md:flex w-full md:w-1/2 items-center justify-center">
           <img
             src="https://s3-alpha-sig.figma.com/img/ec69/a4e4/6c21d583fca24d9604b381d37a07ab34?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hZAZxzLZ3P4fe3IWZeiVPSOuPoEcwfdMUlDZJhufwuLqTbjh~p0fL6LnUrInhyHfCAN6G-IBWmLTMKkj5DIiBJ3upB48e1vZ9zhutYJ4mTYu8g8Mpxaqv5ZKyPQjCPc8yYe20wCPEVSABQxgUM9o1aVQ70BUWoI3T290b4WEjgku~fQPw6L~F2vh~U6iRCaUabHkuOPgOUHZtTCRVaOrRcjSDJCBbprTgT4GdpN-NQZJpHEJW49hV~N9hPLdgXo-B~q6IMrQQJCtDybVrFBkUevXP53bv1q3kw2ZcvOgCW1N6GrF0bTneZcx7ZggXl8Kji8ZdDFkfJmebXikKDudbg__"
             alt="Login Illustration"
@@ -20,8 +22,8 @@ function Loginn() {
           />
         </div>
         <div className="w-full md:w-1/2 flex flex-col p-8">
-          <h2 className="text-4xl font-bold text-green-500 mb-4">Welcome Back</h2>
-          <p className="text-gray-400 mb-8 text-xl">LOGIN TO CONTINUE</p>
+          <h2 className="text-2xl md:text-4xl font-bold text-green-500 mb-4">Welcome Back</h2>
+          <p className="text-gray-400 mb-8 text-lg md:text-xl">LOGIN TO CONTINUE</p>
           <form className="w-full">
             <div className="mb-4">
               <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -58,7 +60,7 @@ function Loginn() {
             <div className="flex items-center justify-between">
               <button
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
+                type="button" onClick={() => { navigate("/profile") }}
               >
                 LOGIN
               </button>

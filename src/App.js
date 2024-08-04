@@ -13,6 +13,9 @@ import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Footer from "./component/footer";
 import ListBestseller from "./pages/listbestsellers";
 import Path from "./component/path";
+import Profile from "./component/profile";
+import Form from "./component/form";
+import Location from "./component/location";
 const App =()=> {
   return (
     <>
@@ -20,9 +23,11 @@ const App =()=> {
       <BrowserRouter>
 
         <Routes >
-        <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><hr className="ml-[25%] border-t-2 border-gray-300  mt-[12%] mb-[2%]" /><ListProduct /><Footer/></>}/>
+        {/* <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><hr className="ml-[25%] border-t-2 border-gray-300  mt-[12%] mb-[2%]" /><ListProduct /><hr className="  border-0 mt-[5%] mb-[2%]" /><Footer/></>}/> */}
+        <Route index element={<><Header /><Navbar /><Searchbar /><Form/> <Location/><Footer/></>}/>
         <Route path="/login" element={<><Header/><Navbar/><Searchbar/><Path/><Login/><Footer/></>}/>
-        <Route path="/signup" element={<><Header/><Navbar/><Searchbar/><SignUp/><Footer/></>}/>
+        <Route path="/signup" element={<><Header/><Navbar/><Searchbar/><Path/><SignUp/><Footer/></>}/>
+        <Route path="/profile" element={<><Header/><Navbar/><Searchbar/><Profile/><Footer/></>}/>
 
         </Routes>
 
