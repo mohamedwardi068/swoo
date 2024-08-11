@@ -44,8 +44,8 @@ const options = [
 function Footer() {
   
     return (
-        <footer className="bg-white p-8 mb-[10%]">
-          <div className="container mx-auto grid grid-cols-1 md:grid-cols-6 gap-8">
+        <footer className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-4 sm:mb-6 md:mb-[1%]">
+          <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             <div className="col-span-2">
               <h3 className="text-xl font-bold mb-4">
                 SWOO - 1ST NYC TECH ONLINE MARKET

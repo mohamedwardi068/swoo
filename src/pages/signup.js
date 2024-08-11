@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react';  // Removed useNavigate from here
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom'; // Added this import
+import { useauth } from '../context/authcontext';
 
 function SignUp() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
+  const { signup } = useauth();
+
+  const handleSignUp = async () => {
+    try {
+      await signup(name, email, password);
+      navigate('/profile');
+    } catch (error) {
+      console.error('Signup Error:', error);
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -17,7 +32,7 @@ function SignUp() {
 
   return (
     <div className="flex justify-center items-start pt-24 bg-gray-100 h-screen">
-      <div className="bg-white shadow-md rounded-lg h-[695.89px] w-[1360px] flex justify-center items-center ">
+      <div className="bg-white shadow-md rounded-lg h-[695.89px] w-[1360px] flex justify-center items-center">
         <div className="hidden md:flex w-1/2 items-center justify-center">
           <img
             src="https://s3-alpha-sig.figma.com/img/ec69/a4e4/6c21d583fca24d9604b381d37a07ab34?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hZAZxzLZ3P4fe3IWZeiVPSOuPoEcwfdMUlDZJhufwuLqTbjh~p0fL6LnUrInhyHfCAN6G-IBWmLTMKkj5DIiBJ3upB48e1vZ9zhutYJ4mTYu8g8Mpxaqv5ZKyPQjCPc8yYe20wCPEVSABQxgUM9o1aVQ70BUWoI3T290b4WEjgku~fQPw6L~F2vh~U6iRCaUabHkuOPgOUHZtTCRVaOrRcjSDJCBbprTgT4GdpN-NQZJpHEJW49hV~N9hPLdgXo-B~q6IMrQQJCtDybVrFBkUevXP53bv1q3kw2ZcvOgCW1N6GrF0bTneZcx7ZggXl8Kji8ZdDFkfJmebXikKDudbg__"
@@ -37,7 +52,9 @@ function SignUp() {
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
                 type="text"
-                placeholder="Jhon Deo"
+                placeholder="John Doe"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
             <div className="mb-4">
@@ -49,6 +66,8 @@ function SignUp() {
                 id="email"
                 type="email"
                 placeholder="Example@gmail.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-6 relative">
@@ -58,7 +77,7 @@ function SignUp() {
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="password"
-                type={showPassword ? "text" : "password"}
+                type={showPassword ? 'text' : 'password'}
                 placeholder="********"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -76,7 +95,7 @@ function SignUp() {
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                 id="confirm-password"
-                type={showConfirmPassword ? "text" : "password"}
+                type={showConfirmPassword ? 'text' : 'password'}
                 placeholder="********"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -91,6 +110,7 @@ function SignUp() {
               <button
                 className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
+                onClick={handleSignUp}
               >
                 REGISTER
               </button>
