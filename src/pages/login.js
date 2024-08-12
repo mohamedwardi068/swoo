@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { useauth } from '../context/authcontext';
+import { useAuth } from '../context/authcontext';
 
 function Loginn() {
  
@@ -9,7 +9,7 @@ function Loginn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const { login } = useauth();
+  const { login } = useAuth();
   const handleLogin = async () => {
     try {
       await login(email, password);

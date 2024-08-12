@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../context/authcontext';
 
 function Profile() {
-  const [firstName, setFirstName] = useState('Mark');
-  const [lastName, setLastName] = useState('Cole');
-  const [email, setEmail] = useState('swoo@gmail.com');
-  const [phoneNumber, setPhoneNumber] = useState('+1 0231 4554 452');
+  const { user } = useAuth();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  useEffect(() => {
+    if (user) {
+      setFirstName(user.firstName);
+      setLastName(user.lastName);
+      setEmail(user.email);
+    }
+  }, [user]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    
     console.log('First Name:', firstName);
     console.log('Last Name:', lastName);
     console.log('Email:', email);
-    console.log('Phone Number:', phoneNumber);
   };
 
   return (
@@ -23,8 +31,8 @@ function Profile() {
           alt="User Profile"
           className="w-24 h-24 md:w-30 md:h-30 mb-2"
         />
-        <h3 className="text-lg md:text-xl font-extrabold mt-2">Mark Cole</h3>
-        <p className="text-gray-500 text-base md:text-lg">swoo@gmail.com</p>
+        <h3 className="text-lg md:text-xl font-extrabold mt-2">{firstName} {lastName}</h3>
+        <p className="text-gray-500 text-base md:text-lg">{email}</p>
         <div className="flex flex-col gap-2 md:gap-4 mt-4 w-full">
           <div className="flex items-center justify-between px-4 py-2 rounded-md bg-gray-100 hover:bg-green-500 hover:text-white">
             <span className="font-medium">Account info</span>
@@ -149,6 +157,7 @@ function Profile() {
                 id="phoneNumber"
                 className="shadow appearance-none border rounded w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border-gray-300 "
                 value={phoneNumber}
+                placeholder='+1261111111'
                 onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>

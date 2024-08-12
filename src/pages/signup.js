@@ -1,7 +1,7 @@
-import React, { useState } from 'react';  // Removed useNavigate from here
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom'; // Added this import
-import { useauth } from '../context/authcontext';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authcontext';
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -11,14 +11,19 @@ function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
-  const { signup } = useauth();
+  const { signup } = useAuth();
 
   const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
     try {
       await signup(name, email, password);
       navigate('/profile');
     } catch (error) {
-      console.error('Signup Error:', error);
+      console.error('Signup Error:', error.message);
+      alert("Sign up failed: " + error.message);
     }
   };
 
