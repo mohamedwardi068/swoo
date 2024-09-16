@@ -44,7 +44,8 @@ const options = [
 function Footer() {
   
     return (
-        <footer className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-4 sm:mb-6 md:mb-[1%]">
+      <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-4 sm:mb-6 md:mb-[1%] h-[1000px]">
+        <footer className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-4 sm:mb-6 md:mb-[1%] h-52">
           <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 md:gap-8">
             <div className="col-span-2">
               <h3 className="text-xl font-bold mb-4">
@@ -158,7 +159,7 @@ function Footer() {
               <img src="https://s3-alpha-sig.figma.com/img/3b5e/4d88/66baeaa152d51cf08f5031769fbf6263?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=HhWA2ekI-0VrJ1yBhVFdocRGOJyPQhCkDFEy2269GdgTV2-6FY4~Yw6EeOg-22K4eRWIge05YA811p5-j--LnjiYt1S9MqDHXIaLinYXbb1bz1sZt7momO3f6KjbL7iw0zM4-bRm92ktXuQq66Ffp4b-SrQ08gxtWGKHW4xy1Uivf0Y1ec8zhZ3~v-Peg~v7oDX9Toe8qo96M0xaJcyUnjle4SkVcV4suFYzOgXx5isyjgfvjze06ljeVHJMH4beISg0vOtwdS22un5eKBpM0gs8JiSrtd6yVTxYnPPast7RndwtDUmFsUalSFRLZAPi37irCGd3W9F99diyLW8oHA__" alt="Klarna" className="w-10 h-auto"/>
             </div>
           </div>
-        </footer>
+        </footer></div>
     );
 }
 

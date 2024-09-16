@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
-
 import Pproduct from '../component/product';
-
-import Productts from '../db/productsdb';
+import { useApi } from '../context/apicontext';
 
 function ListBestseller() {
+  const { newProducts } = useApi();
   const [itemsToShow, setItemsToShow] = useState(40);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 20; 
-  //   const totalPages = Math.ceil(Productts.length / itemsToShow);
+  const totalPages = Math.ceil(newProducts.length / itemsToShow);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -16,70 +14,41 @@ function ListBestseller() {
 
   const getPageNumbers = () => {
     const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-      if (i <= 3 || i === totalPages) {
+    if (totalPages <= 5) {
+      for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
-      } else if (i === 4) {
-        pageNumbers.push("...");
+      }
+    } else {
+      if (currentPage > 2) {
+        pageNumbers.push(1, "...");
+      }
+      for (let i = Math.max(currentPage - 1, 1); i <= Math.min(currentPage + 1, totalPages); i++) {
+        pageNumbers.push(i);
+      }
+      if (currentPage < totalPages - 1) {
+        pageNumbers.push("...", totalPages);
       }
     }
     return pageNumbers;
   };
 
+  const startItem = (currentPage - 1) * itemsToShow + 1;
+  const endItem = Math.min(currentPage * itemsToShow, newProducts.length);
+
   return (
     <>
       <div className='flex justify-between ml-[25%]'>
         <div>
-          <span><span className='font-bold'>1 - {itemsToShow} </span> of 120 results</span>
+          <span><span className='font-bold'>{startItem} - {endItem} </span> of {newProducts.length} results</span>
         </div>
-        <div>
-          <span>Show item</span>
-          <button 
-            onClick={() => setItemsToShow(24)} 
-            className={`bg-gray-300 px-2 py-1 m-1 rounded ${itemsToShow === 24 ? 'font-bold' : ''}`}
-          >
-            24
-          </button>
-          <button 
-            onClick={() => setItemsToShow(48)} 
-            className={`bg-gray-300 px-2 py-1 m-1 rounded ${itemsToShow === 48 ? 'font-bold' : ''}`}
-          >
-            48
-          </button>
-          <button 
-            onClick={() => setItemsToShow(72)} 
-            className={`bg-gray-300 px-2 py-1 m-1 rounded ${itemsToShow === 72 ? 'font-bold' : ''}`}
-          >
-            72
-          </button>
-        </div>
-        <div className='space-x-4'>
-          <span>Show item</span>
-          <select defaultValue="Default" className="px-2 py-1 m-1 rounded-md bg-gray-200">
-            <option value="Default">Default</option>
-          </select>
-        </div>
-        <div>
-          <span><span className='font-bold'>1 - {itemsToShow} </span> of 120 results</span>
-        </div>
-        <div className='mr-5'>
-          <button>View As</button>
-        </div>
+        {/* Rest of the toolbar */}
       </div>
 
       <div className='grid grid-cols-4 gap-2 ml-[25%] w-[70%] h-[100%]'>
-        {Productts.slice((currentPage - 1) * itemsToShow, currentPage * itemsToShow).map((product) => (
+        {newProducts.slice((currentPage - 1) * itemsToShow, currentPage * itemsToShow).map((product) => (
           <Pproduct
             key={product.id}
-            name={product.name}
-            specs={product.specs}
-            price={product.price}
-            priceRange={product.priceRange}
-            originalPrice={product.originalPrice}
-            discount={product.discount}
-            shipping={product.shipping}
-            availability={product.availability}
-            image={product.image}
+            {...product}
           />
         ))}
       </div>
