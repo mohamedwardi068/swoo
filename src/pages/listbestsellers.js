@@ -8,8 +8,8 @@ function ListBestseller() {
     return (
    
       <>
-      <h1 className='font-bold ml-[25%] '>BEST SELLER IN THIS CATEGORY</h1>
-      <div className='grid grid-cols-4 gap-1 ml-[25%] w-[70%] h-[300px] mb-5 '>
+      <h1 className='font-bold ml-[5%] '>BEST SELLER IN THIS CATEGORY</h1>
+      <div className='grid grid-cols-4 gap-1 ml-[5%] w-[90%] h-[300px] mb-5 '>
         
       {products.map((product) => (
         <Pproduct

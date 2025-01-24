@@ -30,7 +30,7 @@ function Product({ name, price, priceRange, specs, image, originalPrice, discoun
         <img
           src={image}
           alt={name}
-          className="w-[200px] h-[200px]"
+          className="w-[200px] h-[200px] items-center justify-center ml-20"
         />
         <div className="mt-4">
           <h2 className="text-lg font-semibold">{name}</h2>

@@ -5,6 +5,7 @@ import {
 
   getAllProducts,
   getCategories,
+  getProducts,
 
 } from "../api/api";
 
@@ -13,8 +14,20 @@ const ApiContext = createContext();
 export const ApiProvider = ({ children }) => {
   const [category, setCategory] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
-  const [response, setResponse] = useState(null); // Initialize as null since it's overridden later
+  const [Products, setProducts] = useState([]);
+  const [response, setResponse] = useState(null); 
+  
 
+  useEffect(() => {
+    async function fetchProducts() {
+      const products = await getProducts();
+      if (products) {
+        setProducts(products); // Update state with fetched products
+      }
+    }
+  
+    fetchProducts(); // Call the function to fetch data
+  }, []);
   // Fetch all categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -82,6 +95,7 @@ export const ApiProvider = ({ children }) => {
       value={{
         category,
         newProducts,
+        Products,
         // addCat,
         addBooksHandler,
         addBookToCategory,  

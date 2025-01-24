@@ -4,6 +4,7 @@ import { useApi } from '../context/apicontext';
 
 function ListBestseller() {
   const { newProducts } = useApi();
+  console.log("first",newProducts)
   const [itemsToShow, setItemsToShow] = useState(40);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(newProducts.length / itemsToShow);
@@ -37,14 +38,14 @@ function ListBestseller() {
 
   return (
     <>
-      <div className='flex justify-between ml-[25%]'>
+      <div className='flex justify-between ml-[5%] mt-[1%]'>
         <div>
           <span><span className='font-bold'>{startItem} - {endItem} </span> of {newProducts.length} results</span>
         </div>
         {/* Rest of the toolbar */}
       </div>
 
-      <div className='grid grid-cols-4 gap-2 ml-[25%] w-[70%] h-[100%]'>
+      <div className='grid grid-cols-4 gap-2 ml-[5%] w-[90%] h-[100%]'>
         {newProducts.slice((currentPage - 1) * itemsToShow, currentPage * itemsToShow).map((product) => (
           <Pproduct
             key={product.id}
@@ -53,7 +54,7 @@ function ListBestseller() {
         ))}
       </div>
 
-      <div className='flex justify-center mt-4 ml-[25%]'>
+      <div className='flex justify-center mt-4'>
         {getPageNumbers().map((number, index) => (
           number === "..." ? (
             <span key={index} className='px-3 py-1 m-1 rounded'>...</span>
