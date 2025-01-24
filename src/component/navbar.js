@@ -7,7 +7,7 @@ function Navbar() {
     <div className="flex flex-wrap justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center">
         <img
-          src="https://s3-alpha-sig.figma.com/img/4331/41bc/8c7a66505619b246757b0e023183dbb2?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=V7l07nKVfk15n1ImOW2A~FPkLCXPLfV-5Wh5PaV1hOAIrfgYYxgInAj0qOj7XM5Yxp6Q8qa8uXqYhb-weOoHfGV8tesRuJGIKL5IgLOCQdXpc3bcPht~ljxouTrGNkDvl9sIeCL9nBaPu4GHbcJvN14qbHbCHxkhUK~p5s1GOffayYILzF2S9GqGG0Vc3d8sUyYUDoKca~nfzQlU9s7Mee7x-caB2sk~23tUiPS3bJIHdE4mwOybEnDfHp3bXL9jRJSxMBQktxvRlbiFFcEAdax3GVqJpc3B~8LjdHfbQgSty4Y-a660YXjV05KC2N8xclgE09euA0Aj2jYTJe4EvQ__"
+          src="https://s3-alpha-sig.figma.com/img/4331/41bc/8c7a66505619b246757b0e023183dbb2?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BDV7ZsXnfUpasj~MbhnLTt~0ODm9hZO0~25XeP~7amlmQCSMeq8s55~CklMW48ApodxtecsBIk0ou2GAhpvaZeZR7xU8LfhFmRWu9J6SgItbrIXXhxKw9eZoHW79kOOHTJ-AJclmQ1g6Rmx3aruvwGzwCBUaKDvdSPDutOgVuO4amIJxeLez81zoFKQTtv6tJifa1v~DvraVqAYdbCoz6FdzsIRAo5ekj6GpwyvktiRJEdso1EiHVG1kHNPxlo2mWqa4qq0JRh6iu6rHcIN3wxU8RGAgHwxhpBFZd6XwIjsa6V5teppmgRMxIkV3Wv2ChHh8a-KNPkChVW3AcXD6hg__"
           alt="Logo"
           className="mr-5 w-15 h-15"
         />

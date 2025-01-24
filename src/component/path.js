@@ -7,8 +7,8 @@ function Path() {
   const generateBreadcrumbs = () => {
     const pathnames = location.pathname.split('/').filter(x => x);
     return (
-      <div className="bg-gray-100 p-6 w-full h-auto flex justify-center">
-        <nav className="flex text-gray-500 text-sm relative bg-white p-4 rounded-full w-[95%] h-[80px] mt-4 shadow-md  ">
+      <div className="bg-gray-100 p-6 w-full h-auto flex justify-center mt-2">
+        <nav className="flex text-gray-500 text-sm relative bg-white p-4 rounded-full w-[95%] h-[80px] mt-1 shadow-md  ">
           <Link to="/" className="hover:text-gray-300 font-bold ml-7 text-lg">Home</Link>
           <span className="mx-3 mt-1">/</span>
           <Link to="/pages" className="hover:text-gray-300 font-bold text-lg">Pages</Link>
