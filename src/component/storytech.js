@@ -25,8 +25,10 @@ function Story() {
 
   return (
     <>
-      <h2 className="text-2xl font-bold mt-2 ml-4 rounded-md ">TOP CELL PHONES & TABLETS</h2>
-      <div className="flex flex-col bg-white">
+    <div className="mx-auto bg-gray-100 py-8 px-4 mt-3 ml-2 mr-2 block ">    
+      
+      <div className="flex flex-col bg-white rounded-xl  shadow-lg p-4 md:p-8 ml-2 mt-3 mb-3 mr-2">
+      <h2 className="text-2xl font-bold mt-2 ml-4 rounded-md  ">TOP CELL PHONES & TABLETS</h2>
         <div className="flex flex-col md:flex-row w-full space-y-4 md:space-y-0 md:space-x-4 mt-1 items-center justify-center">
           <div className="relative flex p-4 rounded-[13px] w-[80%] h-[300px] md:h-[500px]">
             <img
@@ -76,7 +78,7 @@ function Story() {
             </button>
           </div>
         </div>
-      </div>
+      </div></div>
     </>
   );
 }
