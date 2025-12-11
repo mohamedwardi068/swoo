@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/authcontext';
 
 function Navbar() {
   const Navigate = useNavigate();
+  const { user, logout } = useAuth();
   return (
     <div className="flex flex-wrap justify-between items-center p-4 bg-white shadow-md">
       <div className="flex items-center">
@@ -66,11 +68,21 @@ function Navbar() {
 
       <div className="flex flex-col items-center lg:items-start">
         <div className="text-gray-700 font-thin">WELCOME</div>
-        <div className="flex font-bold space-x-1">
-          <button className="hover:underline" onClick={() => { Navigate("/login") }}>LOG IN</button>
-          <span>/</span>
-          <button className="hover:underline" onClick={() => { Navigate("/signup") }}>REGISTER</button>
-        </div>
+        {user ? (
+          <div className="flex font-bold space-x-1 items-center">
+            <span onClick={() => Navigate("/profile")} className="cursor-pointer hover:text-green-600 text-green-500 truncate max-w-[100px]" title={user.name}>
+              {user.name ? user.name.toUpperCase() : "USER"}
+            </span>
+            <span>/</span>
+            <button className="hover:underline text-red-500" onClick={() => { logout(); Navigate("/"); }}>LOGOUT</button>
+          </div>
+        ) : (
+          <div className="flex font-bold space-x-1">
+            <button className="hover:underline" onClick={() => { Navigate("/login") }}>LOG IN</button>
+            <span>/</span>
+            <button className="hover:underline" onClick={() => { Navigate("/signup") }}>REGISTER</button>
+          </div>
+        )}
       </div>
 
       <div className="flex items-center relative">

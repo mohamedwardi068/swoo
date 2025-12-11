@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authcontext';
 
 function Loginn() {
- 
+
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,7 +13,7 @@ function Loginn() {
   const handleLogin = async () => {
     try {
       await login(email, password);
-      navigate('/profile'); 
+      navigate('/');
     } catch (error) {
       console.error('Login Error:', error);
     }
@@ -81,7 +81,7 @@ function Loginn() {
             </div>
           </form>
           <p className="text-gray-600 text-sm mt-4">
-            NEW USER? <a href="#" className="text-green-500 hover:text-green-800">SIGN UP</a>
+            NEW USER? <a href="/signup" className="text-green-500 hover:text-green-800">SIGN UP</a>
           </p>
         </div>
       </div>

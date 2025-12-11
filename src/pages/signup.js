@@ -6,6 +6,7 @@ import { useAuth } from '../context/authcontext';
 function SignUp() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [phonenumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -19,8 +20,9 @@ function SignUp() {
       return;
     }
     try {
-      await signup(name, email, password);
-      navigate('/profile');
+      await signup(name, email, phonenumber, password);
+      // Redirect to home or profile after successful signup
+      navigate('/');
     } catch (error) {
       console.error('Signup Error:', error.message);
       alert("Sign up failed: " + error.message);
@@ -37,7 +39,7 @@ function SignUp() {
 
   return (
     <div className="flex justify-center items-start pt-24 bg-gray-100 h-screen sm:h-screen">
-      <div className="bg-white shadow-md rounded-lg h-[695.89px] w-[1360px] flex justify-center items-center mb-[10%]">
+      <div className="bg-white shadow-md rounded-lg h-auto w-[1360px] flex justify-center items-center mb-[10%] p-4">
         <div className="hidden md:flex w-1/2 items-center justify-center">
           <img
             src="https://s3-alpha-sig.figma.com/img/ec69/a4e4/6c21d583fca24d9604b381d37a07ab34?Expires=1723420800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=hZAZxzLZ3P4fe3IWZeiVPSOuPoEcwfdMUlDZJhufwuLqTbjh~p0fL6LnUrInhyHfCAN6G-IBWmLTMKkj5DIiBJ3upB48e1vZ9zhutYJ4mTYu8g8Mpxaqv5ZKyPQjCPc8yYe20wCPEVSABQxgUM9o1aVQ70BUWoI3T290b4WEjgku~fQPw6L~F2vh~U6iRCaUabHkuOPgOUHZtTCRVaOrRcjSDJCBbprTgT4GdpN-NQZJpHEJW49hV~N9hPLdgXo-B~q6IMrQQJCtDybVrFBkUevXP53bv1q3kw2ZcvOgCW1N6GrF0bTneZcx7ZggXl8Kji8ZdDFkfJmebXikKDudbg__"
@@ -73,6 +75,19 @@ function SignUp() {
                 placeholder="Example@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phonenumber">
+                Phone Number
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="phonenumber"
+                type="tel"
+                placeholder="1234567890"
+                value={phonenumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
               />
             </div>
             <div className="mb-6 relative">
@@ -122,7 +137,7 @@ function SignUp() {
             </div>
           </form>
           <p className="text-gray-600 text-sm mt-4">
-            ALREADY USER? <a href="#" className="text-green-500 hover:text-green-800">LOGIN</a>
+            ALREADY USER? <a href="/login" className="text-green-500 hover:text-green-800">LOGIN</a>
           </p>
         </div>
       </div>
