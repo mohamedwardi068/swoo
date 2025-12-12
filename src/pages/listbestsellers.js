@@ -1,9 +1,16 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
 import Pproduct from '../component/product';
-import products from '../db/bestsellerdb';
+import { useApi } from '../context/apicontext';
 
 function ListBestseller() {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/v1/product/best-sellers')
+      .then((res) => res.json())
+      .then((data) => setProducts(data))
+      .catch((err) => console.error("Error fetching best sellers:", err));
+  }, []);
   return (
     <div className="bg-gray-100 h-auto flex items-center justify-center mt-2 ml-2 mr-2 mb-2 py-8 px-4">
       <div className="bg-white py-16 px-8 rounded-2xl  shadow-lg w-[100%] max-w-[3000px]">
@@ -11,7 +18,7 @@ function ListBestseller() {
         <div className="grid grid-cols-4 gap-6 w-full rounded-xl overflow-hidden">
           {products.map((product) => (
             <Pproduct
-              key={product.id}
+              key={product._id}
               name={product.name}
               specs={product.specs}
               price={product.price}

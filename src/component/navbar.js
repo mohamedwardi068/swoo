@@ -1,69 +1,83 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authcontext';
+import { useApi } from '../context/apicontext';
+import { useCart } from '../context/cartcontext';
+import { FaUser, FaHeart, FaShoppingCart } from 'react-icons/fa';
+
+import logo from '../Logo/logo.png';
 
 function Navbar() {
   const Navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { category } = useApi();
+  const { cartItems, getCartTotal } = useCart();
   return (
     <div className="flex flex-wrap justify-between items-center p-4 bg-white shadow-md">
-      <div className="flex items-center">
+      <div
+        className="flex items-center cursor-pointer"
+        onClick={() => Navigate('/')}
+      >
         <img
-          src="https://s3-alpha-sig.figma.com/img/4331/41bc/8c7a66505619b246757b0e023183dbb2?Expires=1738540800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=BDV7ZsXnfUpasj~MbhnLTt~0ODm9hZO0~25XeP~7amlmQCSMeq8s55~CklMW48ApodxtecsBIk0ou2GAhpvaZeZR7xU8LfhFmRWu9J6SgItbrIXXhxKw9eZoHW79kOOHTJ-AJclmQ1g6Rmx3aruvwGzwCBUaKDvdSPDutOgVuO4amIJxeLez81zoFKQTtv6tJifa1v~DvraVqAYdbCoz6FdzsIRAo5ekj6GpwyvktiRJEdso1EiHVG1kHNPxlo2mWqa4qq0JRh6iu6rHcIN3wxU8RGAgHwxhpBFZd6XwIjsa6V5teppmgRMxIkV3Wv2ChHh8a-KNPkChVW3AcXD6hg__"
+          src={logo}
           alt="Logo"
-          className="mr-5 w-15 h-15"
+          className="mr-5 w-14 h-auto"
         />
+        <div className="font-bold text-2xl font-serif">
+          Swoo
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-6 font-bold relative">
-        <div className="cursor-pointer flex items-center group">
+        <div className="cursor-pointer flex items-center group " onClick={() => Navigate('/')}>
           HOMES
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-          <div className="absolute hidden group-hover:block bg-white shadow-md mt-8 p-2 z-10">
-            <div className="flex flex-col space-y-2">
-              <a className="hover:text-blue-500">Option 1</a>
-              <a className="hover:text-blue-500">Option 2</a>
-              <a className="hover:text-blue-500">Option 3</a>
-            </div>
-          </div>
         </div>
-        <div className="cursor-pointer flex items-center group">
-          PAGES
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-          <div className="absolute hidden group-hover:block bg-white shadow-md mt-8 p-2 z-10">
-            <div className="flex flex-col space-y-2">
-              <a className="hover:text-blue-500">Option 1</a>
-              <a className="hover:text-blue-500">Option 2</a>
-              <a className="hover:text-blue-500">Option 3</a>
-            </div>
-          </div>
-        </div>
+ 
         <div className="cursor-pointer flex items-center group">
           PRODUCTS
           <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
           </svg>
-          <div className="absolute hidden group-hover:block bg-white shadow-md mt-8 p-2 z-10">
+          <div className="absolute hidden group-hover:block bg-white shadow-md mt-8 p-2 z-10 w-48">
             <div className="flex flex-col space-y-2">
-              <a className="hover:text-blue-500">Option 1</a>
-              <a className="hover:text-blue-500">Option 2</a>
-              <a className="hover:text-blue-500">Option 3</a>
+              {category && category.length > 0 ? (
+                category.map((cat) => (
+                  <span
+                    key={cat._id}
+                    onClick={() => Navigate(`/category/${cat._id}`)}
+                    className="hover:text-green-600 block px-2 py-1 cursor-pointer"
+                  >
+                    {cat.name}
+                  </span>
+                ))
+              ) : (
+                <span className="text-gray-500 text-sm px-2">Loading...</span>
+              )}
             </div>
           </div>
         </div>
         <div className="cursor-pointer">CONTACT</div>
       </div>
 
-      <div className="flex space-x-2 items-center">
-        <svg className="w-10 h-10 bg-gray-300 rounded-full" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
-        <button className="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center text-5xl font-serif">
-          &#9825;
-        </button>
-        <svg className="w-10 h-10 bg-gray-300 rounded-full" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+      <div className="flex space-x-4 items-center">
+        <div
+          onClick={() => Navigate('/checkout')}
+          className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition duration-300 cursor-pointer"
+        >
+          <FaShoppingCart className="text-xl" />
+        </div>
+        <div
+          onClick={() => Navigate('/wishlist')}
+          className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition duration-300 cursor-pointer"
+        >
+          <FaHeart className="text-xl" />
+        </div>
+        <div
+          onClick={() => Navigate('/profile')}
+          className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition duration-300 cursor-pointer"
+        >
+          <FaUser className="text-xl" />
+        </div>
       </div>
 
       <div className="flex flex-col items-center lg:items-start">
@@ -92,11 +106,14 @@ function Navbar() {
           className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
         />
         <div className="absolute top-0 right-0 w-5 h-5 bg-green-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-white text-xs">
-          5
+          {cartItems.length}
         </div>
-        <div className="flex flex-col items-center lg:items-start">
+        <div
+          onClick={() => Navigate('/checkout')}
+          className="flex flex-col items-center lg:items-start cursor-pointer hover:text-green-600 transition"
+        >
           <div className="text-gray-700 font-light text-xs">CART</div>
-          <div className="font-bold">$1,689.00</div>
+          <div className="font-bold">${getCartTotal().toFixed(2)}</div>
         </div>
       </div>
     </div>

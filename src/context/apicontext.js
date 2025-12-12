@@ -9,14 +9,16 @@ import {
 
 } from "../api/api";
 
-const ApiContext = createContext(); 
+const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {
   const [category, setCategory] = useState([]);
   const [newProducts, setNewProducts] = useState([]);
   const [Products, setProducts] = useState([]);
-  const [response, setResponse] = useState(null); 
-  
+  const [response, setResponse] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all-categories");
+
 
   useEffect(() => {
     async function fetchProducts() {
@@ -25,7 +27,7 @@ export const ApiProvider = ({ children }) => {
         setProducts(products); // Update state with fetched products
       }
     }
-  
+
     fetchProducts(); // Call the function to fetch data
   }, []);
   // Fetch all categories
@@ -54,17 +56,17 @@ export const ApiProvider = ({ children }) => {
     fetchNewBooks();
   }, []);
 
-//   // Add a new category
-//   const addCat = async (data) => {
-//     try {
-//       const categoryResponse = await addCategories(data);
-//       setResponse(categoryResponse); // You may want to reset this later
-//       return categoryResponse;
-//     } catch (error) {
-//       console.error("API Error (addCat):", error);
-//       return null;
-//     }
-//   };
+  //   // Add a new category
+  //   const addCat = async (data) => {
+  //     try {
+  //       const categoryResponse = await addCategories(data);
+  //       setResponse(categoryResponse); // You may want to reset this later
+  //       return categoryResponse;
+  //     } catch (error) {
+  //       console.error("API Error (addCat):", error);
+  //       return null;
+  //     }
+  //   };
 
   // Add a new book (product)
   const addBooksHandler = async (data) => {
@@ -98,7 +100,11 @@ export const ApiProvider = ({ children }) => {
         Products,
         // addCat,
         addBooksHandler,
-        addBookToCategory,  
+        addBookToCategory,
+        searchTerm,
+        setSearchTerm,
+        selectedCategory,
+        setSelectedCategory,
       }}
     >
       {children}

@@ -2,13 +2,35 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { FaHeart } from 'react-icons/fa';
 
-function Product({ name, price, priceRange, specs, image, originalPrice, discount, shipping, availability }) {
+function Product({ _id, name, price, priceRange, specs, image, originalPrice, discount, shipping, availability }) {
   const navigate = useNavigate();
+  const [isInWishlist, setIsInWishlist] = React.useState(false);
+
+  React.useEffect(() => {
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+    setIsInWishlist(wishlist.some(item => item._id === _id));
+  }, [_id]);
 
   const handleProductClick = () => {
-    // Navigate to the ProductDisplay page with product details
-    navigate('/product-display', { state: { name, price, specs, image, originalPrice, discount, shipping, availability } });
+    navigate('/product-display', { state: { _id, name, price, priceRange, specs, image, originalPrice, discount, shipping, availability } });
+  };
+
+  const toggleWishlist = (e) => {
+    e.stopPropagation(); // Prevent navigating to product page
+    const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+
+    if (isInWishlist) {
+      const newWishlist = wishlist.filter(item => item._id !== _id);
+      localStorage.setItem('wishlist', JSON.stringify(newWishlist));
+      setIsInWishlist(false);
+    } else {
+      const productToAdd = { _id, name, price, priceRange, specs, image, originalPrice, discount, shipping, availability };
+      wishlist.push(productToAdd);
+      localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      setIsInWishlist(true);
+    }
   };
 
   const isNewProduct =
@@ -46,7 +68,12 @@ function Product({ name, price, priceRange, specs, image, originalPrice, discoun
             OUT OF STOCK
           </div>
         )}
-        <div className="cursor-pointer rounded-full bg-slate-300 h-10 w-10 flex items-center justify-center text-5xl font-serif ml-60"></div>
+        <div
+          onClick={toggleWishlist}
+          className="cursor-pointer rounded-full bg-slate-300 h-10 w-10 flex items-center justify-center text-xl ml-60 hover:bg-green-500 hover:text-white transition duration-300"
+        >
+          <FaHeart className={isInWishlist ? 'text-green-600' : 'text-white'} />
+        </div>
         <img
           src={image}
           alt={name}
@@ -72,9 +99,8 @@ function Product({ name, price, priceRange, specs, image, originalPrice, discoun
           </div>
           {/* Display shipping details */}
           <div
-            className={`py-1 px-2 rounded-md inline-block mt-2 font-serif ${
-              shipping === 'Free Shipping' ? 'text-green-600' : 'text-black'
-            } bg-gray-200`}
+            className={`py-1 px-2 rounded-md inline-block mt-2 font-serif ${shipping === 'Free Shipping' ? 'text-green-600' : 'text-black'
+              } bg-gray-200`}
           >
             {shipping === 'Free Shipping' ? shipping : `$${shipping}`}
           </div>
@@ -87,13 +113,12 @@ function Product({ name, price, priceRange, specs, image, originalPrice, discoun
           {/* Display availability */}
           <div className="mt-2 font-light">
             <span
-              className={`font-bold ${
-                availability === 'In stock'
-                  ? 'text-green-600'
-                  : availability === 'Contact'
+              className={`font-bold ${availability === 'In stock'
+                ? 'text-green-600'
+                : availability === 'Contact'
                   ? 'text-black'
                   : 'text-red-600'
-              }`}
+                }`}
             >
               {availability}
             </span>

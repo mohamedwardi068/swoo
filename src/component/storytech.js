@@ -1,9 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApi } from '../context/apicontext';
 
 function Story() {
   const { Products } = useApi();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    if (Products && Products.length > 0) {
+      setCurrentIndex((prev) => (prev + 1) % Products.length);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (Products && Products.length > 0) {
+      setCurrentIndex((prev) => (prev - 1 + Products.length) % Products.length);
+    }
+  };
+
+  useEffect(() => {
+    if (!Products || Products.length === 0) return;
+    const interval = setInterval(() => {
+      handleNext();
+    }, 4000); // Auto-slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [Products]);
 
   if (!Products || Products.length === 0) {
     return (
@@ -26,14 +47,6 @@ function Story() {
     } catch {
       return '';
     }
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % Products.length);
-  };
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev - 1 + Products.length) % Products.length);
   };
 
   return (

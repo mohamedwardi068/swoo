@@ -6,13 +6,18 @@ import { AuthProvider } from './context/authcontext';
 import { ApiProvider } from './context/apicontext';
 
 
+import { CartProvider } from './context/cartcontext';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthProvider>
     <ApiProvider>
-  <React.StrictMode>
-    <App/>
-  </React.StrictMode></ApiProvider>
+      <CartProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </CartProvider>
+    </ApiProvider>
   </AuthProvider>
 );
 
