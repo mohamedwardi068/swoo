@@ -20,6 +20,8 @@ import ProductDisplay from "./component/ProductDisplay";
 import Wishlist from "./pages/wishlist";
 import Checkout from "./pages/checkout";
 import CategoryPage from "./pages/categorypage";
+import { FeaturedCategories } from "./component/FeaturedCategories";
+import { PromoBanner } from "./component/PromoBanner";
 const App = () => {
   return (
     <>
@@ -27,7 +29,7 @@ const App = () => {
       <BrowserRouter>
 
         <Routes >
-          <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><ListProduct /><hr className="border-0 mt-12 mb-8 sm:mt-16 sm:mb-10 md:mt-[5%] md:mb-[3%]" /><Footer /> </>} />
+          <Route index element={<><Header /><Navbar /><Searchbar /><Storytech /><ListBestseller /><FeaturedCategories /><ListProduct /><hr className="border-0 mt-12 mb-8 sm:mt-16 sm:mb-10 md:mt-[5%] md:mb-[3%]" /><PromoBanner /><Footer /> </>} />
           {/* <Route index element={<><Header /><Navbar /><Searchbar /><Form/> <Footer/></>}/> */}
           <Route path="/product-display" element={<><Header /><Navbar /><Searchbar /> <Path /><ProductDisplay /><Footer /></>} />
           <Route path="/login" element={<><Header /><Navbar /><Searchbar /><Path /><Login /><Footer /></>} />

@@ -20,7 +20,7 @@ function ListBestseller() {
     return nameMatch;
   });
 
-  const [itemsToShow, setItemsToShow] = useState(40);
+  const [itemsToShow, setItemsToShow] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(filteredProducts.length / itemsToShow);
 

@@ -1,133 +1,160 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useApi } from '../context/apicontext';
 
-function Story() {
+
+export default function HeroSlider() {
   const { Products } = useApi();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
+  const [fadeState, setFadeState] = useState('fade-in');
 
-  const handleNext = () => {
-    if (Products && Products.length > 0) {
+  const hasProducts = Products && Products.length > 0;
+
+  const goToNext = useCallback(() => {
+    if (!hasProducts) return;
+    setFadeState('fade-out');
+    setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % Products.length);
-    }
-  };
+      setFadeState('fade-in');
+    }, 300);
+  }, [hasProducts, Products]);
 
-  const handlePrevious = () => {
-    if (Products && Products.length > 0) {
+  const goToPrevious = useCallback(() => {
+    if (!hasProducts) return;
+    setFadeState('fade-out');
+    setTimeout(() => {
       setCurrentIndex((prev) => (prev - 1 + Products.length) % Products.length);
-    }
-  };
+      setFadeState('fade-in');
+    }, 300);
+  }, [hasProducts, Products]);
 
   useEffect(() => {
-    if (!Products || Products.length === 0) return;
-    const interval = setInterval(() => {
-      handleNext();
-    }, 4000); // Auto-slide every 4 seconds
+    if (!hasProducts || isHovered) return;
 
+    const interval = setInterval(goToNext, 4000);
     return () => clearInterval(interval);
-  }, [Products]);
+  }, [hasProducts, isHovered, goToNext]);
 
-  if (!Products || Products.length === 0) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') goToPrevious();
+      if (e.key === 'ArrowRight') goToNext();
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [goToNext, goToPrevious]);
+
+  if (!hasProducts) {
     return (
-      <div className="min-h-screen flex justify-center items-center text-gray-600">
-        Loading products...
+      <div className="w-full h-screen bg-black flex items-center justify-center">
+        <p className="text-gray-500 text-lg">No products available</p>
       </div>
     );
   }
 
-  const product = Products[currentIndex];
-
-  const formatDate = (dateObj) => {
-    if (!dateObj?.$date) return '';
-    try {
-      const d = new Date(dateObj.$date);
-      return new Intl.DateTimeFormat('en-US', {
-        dateStyle: 'medium',
-        timeStyle: 'short',
-      }).format(d);
-    } catch {
-      return '';
-    }
-  };
+  const currentProduct = Products[currentIndex];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-black to-gray-800 text-white overflow-hidden">
-
-      {/* Background overlay blur */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-md" />
-
-      {/* FULL WIDTH CARD */}
-      <div className="relative z-10 w-full h-full flex flex-col md:flex-row overflow-hidden bg-white/10 backdrop-blur-xl shadow-2xl border border-white/10">
-
-        {/* LEFT — FULL HEIGHT IMAGE */}
-        <div className="flex-1 flex items-center justify-center p-6">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-[50vh] md:h-full object-cover rounded-xl shadow-lg transform hover:scale-105 transition duration-300"
-          />
-        </div>
-
-        {/* RIGHT — FULL HEIGHT PRODUCT DETAILS */}
-        <div className="flex-1 flex flex-col justify-between p-10 md:p-16 text-white">
-          <div>
-            <h2 className="text-5xl font-extrabold mb-6 tracking-wide">
-              {product.name}
-            </h2>
-
-            {product.specs && (
-              <p className="text-lg text-gray-300 mb-8">
-                {product.specs}
-              </p>
-            )}
-
-            <p className="text-3xl mb-6">
-              <span className="line-through mr-3 text-red-400 opacity-80">
-                ${product.originalPrice?.toFixed(2)}
-              </span>
-
-              <span className="font-bold text-green-400">
-                ${product.price?.toFixed(2)}
-              </span>
-
-              {product.discount && (
-                <span className="ml-4 bg-red-700/30 text-red-300 px-4 py-1 rounded-full text-sm font-semibold">
-                  {product.discount}% OFF
-                </span>
-              )}
-            </p>
-
-            {product.createdAt && (
-              <p className="text-sm text-gray-400">
-                Added on {formatDate(product.createdAt)}
-              </p>
-            )}
+    <div
+      className="relative w-full h-screen bg-black overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label="Product showcase"
+    >
+      <div
+        className={`absolute inset-0 transition-opacity duration-300 ${fadeState === 'fade-in' ? 'opacity-100' : 'opacity-0'
+          }`}
+      >
+        <div className="flex flex-col md:flex-row h-full">
+          <div className="w-full md:w-1/2 h-1/2 md:h-full relative flex items-center justify-center p-8 md:p-16">
+            <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/40" />
+            <img
+              src={currentProduct.image}
+              alt={currentProduct.name}
+              className="relative z-10 max-w-full max-h-full object-contain drop-shadow-2xl"
+              loading="lazy"
+            />
           </div>
 
-          <button
-            className="mt-8 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg shadow-lg transition duration-300"
-            onClick={() => console.log('Buy now', product.id)}
-          >
-            BUY NOW
-          </button>
+          <div className="w-full md:w-1/2 h-1/2 md:h-full flex flex-col justify-center px-8 md:px-16 lg:px-24 py-8 md:py-16">
+            <div className="space-y-6 md:space-y-8">
+              {currentProduct.discount > 0 && (
+                <div className="inline-block">
+                  <span className="bg-red-600 text-white text-sm md:text-base font-bold px-4 py-2 rounded-full">
+                    {currentProduct.discount}% OFF
+                  </span>
+                </div>
+              )}
+
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight">
+                {currentProduct.name}
+              </h1>
+
+              {currentProduct.specs && (
+                <p className="text-base md:text-lg text-gray-400 leading-relaxed max-w-xl">
+                  {currentProduct.specs}
+                </p>
+              )}
+
+              <div className="flex items-baseline gap-4">
+                <span className="text-4xl md:text-5xl font-bold text-green-500">
+                  ${currentProduct.price.toFixed(2)}
+                </span>
+                {currentProduct.originalPrice > currentProduct.price && (
+                  <span className="text-xl md:text-2xl text-gray-500 line-through">
+                    ${currentProduct.originalPrice.toFixed(2)}
+                  </span>
+                )}
+              </div>
+
+              <button className="mt-4 md:mt-8 bg-green-500 hover:bg-green-600 text-black font-bold text-base md:text-lg px-10 md:px-12 py-4 md:py-5 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/50 active:scale-95 w-full md:w-auto">
+                BUY NOW
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* NAVIGATION BUTTONS */}
       <button
-        className="absolute left-8 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-4 md:p-6 rounded-full shadow-xl transition"
-        onClick={handlePrevious}
+        onClick={goToPrevious}
+        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300 z-20 group"
+        aria-label="Previous product"
       >
-        &#8249;
+        <ChevronLeft className="w-6 h-6 md:w-8 md:h-8 group-hover:scale-110 transition-transform" />
       </button>
 
       <button
-        className="absolute right-8 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-4 md:p-6 rounded-full shadow-xl transition"
-        onClick={handleNext}
+        onClick={goToNext}
+        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 md:p-4 rounded-full transition-all duration-300 z-20 group"
+        aria-label="Next product"
       >
-        &#8250;
+        <ChevronRight className="w-6 h-6 md:w-8 md:h-8 group-hover:scale-110 transition-transform" />
       </button>
-    </section>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 md:gap-3 z-20">
+        {Products.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => {
+              setFadeState('fade-out');
+              setTimeout(() => {
+                setCurrentIndex(index);
+                setFadeState('fade-in');
+              }, 300);
+            }}
+            className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${index === currentIndex
+                ? 'bg-green-500 w-6 md:w-8'
+                : 'bg-white/30 hover:bg-white/50'
+              }`}
+            aria-label={`Go to slide ${index + 1}`}
+            aria-current={index === currentIndex ? 'true' : 'false'}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
-
-export default Story;

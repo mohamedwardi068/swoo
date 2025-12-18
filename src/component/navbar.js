@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authcontext';
 import { useApi } from '../context/apicontext';
 import { useCart } from '../context/cartcontext';
-import { FaUser, FaHeart, FaShoppingCart } from 'react-icons/fa';
+import { FaUser, FaHeart, FaShoppingCart, FaShoppingBag } from 'react-icons/fa';
 
 import logo from '../Logo/logo.png';
 
@@ -32,26 +32,31 @@ function Navbar() {
         <div className="cursor-pointer flex items-center group " onClick={() => Navigate('/')}>
           HOMES
         </div>
- 
-        <div className="cursor-pointer flex items-center group">
-          PRODUCTS
-          <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-          </svg>
-          <div className="absolute hidden group-hover:block bg-white shadow-md mt-8 p-2 z-10 w-48">
-            <div className="flex flex-col space-y-2">
+
+        <div className="relative cursor-pointer group">
+          <div className="flex items-center">
+            PRODUCTS
+            <svg className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </div>
+          <div className="absolute left-0 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div className="bg-white shadow-xl rounded-lg p-3 min-w-[200px] border border-gray-100">
               {category && category.length > 0 ? (
-                category.map((cat) => (
-                  <span
-                    key={cat._id}
-                    onClick={() => Navigate(`/category/${cat._id}`)}
-                    className="hover:text-green-600 block px-2 py-1 cursor-pointer"
-                  >
-                    {cat.name}
-                  </span>
-                ))
+                <div className="flex flex-col space-y-1">
+                  {category.map((cat) => (
+                    <div
+                      key={cat._id}
+                      onClick={() => Navigate(`/category/${cat._id}`)}
+                      className="px-4 py-2 hover:bg-green-50 hover:text-green-600 rounded-md cursor-pointer transition-all duration-200 flex items-center justify-between group/item"
+                    >
+                      <span className="font-medium">{cat.name}</span>
+                      <span className="text-xs text-gray-400 group-hover/item:text-green-500">{cat.productCount || 0}</span>
+                    </div>
+                  ))}
+                </div>
               ) : (
-                <span className="text-gray-500 text-sm px-2">Loading...</span>
+                <span className="text-gray-500 text-sm px-4 py-2 block">Loading...</span>
               )}
             </div>
           </div>
@@ -99,21 +104,13 @@ function Navbar() {
         )}
       </div>
 
-      <div className="flex items-center relative">
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRu7kWrySvnkWmPw92ID6MYhhPbucAV_CcHdg&s"
-          alt="Cart Logo"
-          className="w-10 h-10 rounded-full flex items-center justify-center mr-3"
-        />
-        <div className="absolute top-0 right-0 w-5 h-5 bg-green-500 rounded-full transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center text-white text-xs">
-          {cartItems.length}
-        </div>
-        <div
-          onClick={() => Navigate('/checkout')}
-          className="flex flex-col items-center lg:items-start cursor-pointer hover:text-green-600 transition"
-        >
-          <div className="text-gray-700 font-light text-xs">CART</div>
-          <div className="font-bold">${getCartTotal().toFixed(2)}</div>
+      <div
+        className="flex items-center relative cursor-pointer"
+        onClick={() => Navigate('/checkout')}
+      >
+        <FaShoppingBag className="text-3xl text-gray-500" />
+        <div className="absolute -top-1 -right-2 w-5 h-5 bg-white border border-green-500 rounded-full flex items-center justify-center">
+          <span className="text-green-500 text-xs font-bold">{cartItems.length}</span>
         </div>
       </div>
     </div>
