@@ -1,6 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube, FaPinterest, FaPaypal, FaCcVisa, FaCcMastercard, FaCcStripe } from 'react-icons/fa';
+import { useApi } from '../context/apicontext';
 
 const customSingleValue = ({ data }) => (
   <div className="flex items-center">
@@ -42,6 +44,8 @@ const options = [
 ];
 
 function Footer() {
+  const Navigate = useNavigate();
+  const { category } = useApi();
 
   return (
     <div className="bg-white p-4 sm:p-6 md:p-8 lg:p-10 mb-4 sm:mb-6 md:mb-[1%] h-[1000px]">
@@ -86,47 +90,51 @@ function Footer() {
           <div>
             <h3 className="text-xl font-extrabold text-black ">TOP CATEGORIES</h3>
             <ul>
-              <button className="block mt-2">Laptops</button>
-              <button className="block mt-1">PC & Computers</button>
-              <button className="block mt-1">Cell Phones</button>
-              <button className="block mt-1">Tablets</button>
-              <button className="block mt-1">Gaming & VR</button>
-              <button className="block mt-1">Networks</button>
-              <button className="block mt-1">Cameras</button>
-              <button className="block mt-1">Sounds</button>
-              <button className="block mt-1">Office</button>
+              {category && category.length > 0 ? (
+                category.slice(0, 7).map((cat) => (
+                  <button
+                    key={cat._id}
+                    onClick={() => Navigate(`/category/${cat._id}`)}
+                    className="block mt-1 hover:text-green-600 transition-colors text-left"
+                  >
+                    {cat.name}
+                  </button>
+                ))
+              ) : (
+                <span className="text-gray-500 text-sm">Loading...</span>
+              )}
             </ul>
           </div>
           <div>
             <h3 className="text-xl font-extrabold text-black">COMPANY</h3>
             <ul>
-              <button className="block">About Swoo</button>
-              <button className="block">Contact</button>
-              <button className="block">Career</button>
-              <button className="block">Blog</button>
-              <button className="block">Sitemap</button>
-              <button className="block">Store Locations</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">About Swoo</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">Contact</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">Career</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">Blog</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">Sitemap</button>
+              <button onClick={() => Navigate('/about')} className="block hover:text-green-600 transition-colors text-left">Store Locations</button>
             </ul>
           </div>
           <div>
             <h3 className="text-xl font-extrabold text-black">HELP CENTER</h3>
             <ul>
-              <button className="block">Customer Service</button>
-              <button className="block">Policy</button>
-              <button className="block">Terms & Conditions</button>
-              <button className="block">Track Order</button>
-              <button className="block">FAQs</button>
-              <button className="block">My Account</button>
-              <button className="block">Product Support</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">Customer Service</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">Policy</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">Terms & Conditions</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">Track Order</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">FAQs</button>
+              <button onClick={() => Navigate('/profile')} className="block hover:text-green-600 transition-colors text-left">My Account</button>
+              <button onClick={() => Navigate('/help')} className="block hover:text-green-600 transition-colors text-left">Product Support</button>
             </ul>
           </div>
           <div>
             <h3 className="text-xl font-extrabold text-black">PARTNER</h3>
             <ul>
-              <button className="block">Become Seller</button>
-              <button className="block">Affiliate</button>
-              <button className="block">Advertise</button>
-              <button className="block">Partnership</button>
+              <button onClick={() => Navigate('/partner')} className="block hover:text-green-600 transition-colors text-left">Become Seller</button>
+              <button onClick={() => Navigate('/partner')} className="block hover:text-green-600 transition-colors text-left">Affiliate</button>
+              <button onClick={() => Navigate('/partner')} className="block hover:text-green-600 transition-colors text-left">Advertise</button>
+              <button onClick={() => Navigate('/partner')} className="block hover:text-green-600 transition-colors text-left">Partnership</button>
             </ul>
           </div>
         </div>
