@@ -39,6 +39,17 @@ export const getAllProducts = async () => {
   }
 };
 
+export const getBestSellers = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/product/best-sellers`);
+    console.log("Best sellers fetched:", response);
+    return response.data;
+  } catch (error) {
+    console.error('API error (getBestSellers):', error);
+    return null;
+  }
+};
+
 
 export const addCategory = async (data) => {
   try {

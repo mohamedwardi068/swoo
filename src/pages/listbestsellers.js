@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Pproduct from '../component/product';
-import { useApi } from '../context/apicontext';
+import { getBestSellers } from '../api/api';
 
 function ListBestseller() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/v1/product/best-sellers')
-      .then((res) => res.json())
-      .then((data) => setProducts(data))
+    getBestSellers()
+      .then((data) => {
+        if (data) setProducts(data);
+      })
       .catch((err) => console.error("Error fetching best sellers:", err));
   }, []);
   return (
