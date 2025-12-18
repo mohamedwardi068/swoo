@@ -22,6 +22,9 @@ import Checkout from "./pages/checkout";
 import CategoryPage from "./pages/categorypage";
 import { FeaturedCategories } from "./component/FeaturedCategories";
 import { PromoBanner } from "./component/PromoBanner";
+import About from "./pages/About";
+import HelpCenter from "./pages/HelpCenter";
+import Partner from "./pages/Partner";
 const App = () => {
   return (
     <>
@@ -37,7 +40,10 @@ const App = () => {
           <Route path="/profile" element={<><Header /><Navbar /><Searchbar /><Profile /><Footer /></>} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/category/:id" element={<CategoryPage />} />
+          <Route path="/category/:categoryId" element={<CategoryPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/help" element={<HelpCenter />} />
+          <Route path="/partner" element={<Partner />} />
 
         </Routes>
 
