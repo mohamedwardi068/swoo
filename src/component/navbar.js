@@ -11,9 +11,11 @@ function Navbar() {
   const Navigate = useNavigate();
   const { user, logout } = useAuth();
   const { category } = useApi();
-  const { cartItems, getCartTotal } = useCart();
+  const { cartItems } = useCart();
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
-    <div className="flex flex-wrap justify-between items-center p-4 bg-white shadow-md">
+    <div className="flex flex-wrap justify-between items-center p-4 bg-white shadow-md relative z-50">
       <div
         className="flex items-center cursor-pointer"
         onClick={() => Navigate('/')}
@@ -28,26 +30,44 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-6 font-bold relative">
-        <div className="cursor-pointer flex items-center group " onClick={() => Navigate('/')}>
+      {/* Hamburger Icon for Mobile */}
+      <div className="lg:hidden flex items-center">
+        <button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          className="text-gray-700 hover:text-green-500 focus:outline-none"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            {isMenuOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Navigation Links - Hidden on mobile unless menu is open */}
+      <div className={`${isMenuOpen ? 'flex' : 'hidden'} lg:flex flex-col lg:flex-row absolute lg:relative top-full left-0 right-0 bg-white lg:bg-transparent shadow-md lg:shadow-none p-4 lg:p-0 space-y-4 lg:space-y-0 lg:space-x-6 font-bold w-full lg:w-auto z-40`}>
+        <div className="cursor-pointer flex items-center group hover:text-green-500 transition-colors" onClick={() => { Navigate('/'); setIsMenuOpen(false); }}>
           HOMES
         </div>
 
         <div className="relative cursor-pointer group">
-          <div className="flex items-center">
+          <div className="flex items-center hover:text-green-500 transition-colors">
             PRODUCTS
             <svg className="w-4 h-4 ml-1 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
             </svg>
           </div>
-          <div className="absolute left-0 mt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 ease-in-out transform translate-y-2 group-hover:translate-y-0 z-50">
-            <div className="bg-white shadow-xl rounded-lg p-3 min-w-[200px] border border-gray-100">
+          <div className="lg:absolute lg:left-0 lg:mt-2 opacity-100 lg:opacity-0 lg:invisible lg:group-hover:opacity-100 lg:group-hover:visible transition-all duration-300 ease-in-out lg:transform lg:translate-y-2 lg:group-hover:translate-y-0 z-50 w-full lg:w-auto relative invisible h-0 lg:h-auto group-hover:visible group-hover:h-auto">
+            {/* Mobile specific styling for dropdown behavior could be improved, but relying on group-hover for now or simple visibility toggle if clicked */}
+            <div className="bg-white lg:shadow-xl rounded-lg p-3 min-w-[200px] lg:border border-gray-100 pl-4 lg:pl-3 border-l-2 lg:border-l-0 border-green-500 lg:border-none mt-2 lg:mt-0">
               {category && category.length > 0 ? (
                 <div className="flex flex-col space-y-1">
                   {category.map((cat) => (
                     <div
                       key={cat._id}
-                      onClick={() => Navigate(`/category/${cat._id}`)}
+                      onClick={() => { Navigate(`/category/${cat._id}`); setIsMenuOpen(false); }}
                       className="px-4 py-2 hover:bg-green-50 hover:text-green-600 rounded-md cursor-pointer transition-all duration-200 flex items-center justify-between group/item"
                     >
                       <span className="font-medium">{cat.name}</span>
@@ -61,10 +81,10 @@ function Navbar() {
             </div>
           </div>
         </div>
-        <div className="cursor-pointer">CONTACT</div>
+        <div className="cursor-pointer hover:text-green-500 transition-colors" onClick={() => setIsMenuOpen(false)}>CONTACT</div>
       </div>
 
-      <div className="flex space-x-4 items-center">
+      <div className="hidden lg:flex space-x-4 items-center">
         <div
           onClick={() => Navigate('/checkout')}
           className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center hover:bg-green-500 hover:text-white transition duration-300 cursor-pointer"
@@ -85,10 +105,10 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center lg:items-start">
-        <div className="text-gray-700 font-thin">WELCOME</div>
+      <div className="hidden lg:flex flex-col items-center lg:items-start ml-4">
+        <div className="text-gray-700 font-thin text-sm">WELCOME</div>
         {user ? (
-          <div className="flex font-bold space-x-1 items-center">
+          <div className="flex font-bold space-x-1 items-center text-sm">
             <span onClick={() => Navigate("/profile")} className="cursor-pointer hover:text-green-600 text-green-500 truncate max-w-[100px]" title={user.name}>
               {user.name ? user.name.toUpperCase() : "USER"}
             </span>
@@ -96,7 +116,7 @@ function Navbar() {
             <button className="hover:underline text-red-500" onClick={() => { logout(); Navigate("/"); }}>LOGOUT</button>
           </div>
         ) : (
-          <div className="flex font-bold space-x-1">
+          <div className="flex font-bold space-x-1 text-sm">
             <button className="hover:underline" onClick={() => { Navigate("/login") }}>LOG IN</button>
             <span>/</span>
             <button className="hover:underline" onClick={() => { Navigate("/signup") }}>REGISTER</button>
@@ -105,7 +125,7 @@ function Navbar() {
       </div>
 
       <div
-        className="flex items-center relative cursor-pointer"
+        className="hidden lg:flex items-center relative cursor-pointer ml-4"
         onClick={() => Navigate('/checkout')}
       >
         <FaShoppingBag className="text-3xl text-gray-500" />

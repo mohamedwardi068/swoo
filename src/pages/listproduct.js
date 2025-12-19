@@ -20,7 +20,7 @@ function ListBestseller() {
     return nameMatch;
   });
 
-  const [itemsToShow, setItemsToShow] = useState(12);
+  const [itemsToShow] = useState(12);
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(filteredProducts.length / itemsToShow);
 
@@ -52,17 +52,17 @@ function ListBestseller() {
   const endItem = Math.min(currentPage * itemsToShow, filteredProducts.length);
 
   return (
-    <div id="product-list-section" className="bg-gray-100 py-8 px-4 h-auto flex items-center justify-center mt-2 ml-2 mr-2 mb-2 ">
-      <div className="bg-white py-8 px-6 rounded-2xl shadow-lg w-[100%] max-w-[3000px]">
+    <div id="product-list-section" className="bg-gray-100 py-8 px-4 h-auto flex items-center justify-center w-full">
+      <div className="bg-white py-8 px-4 sm:px-6 rounded-2xl shadow-lg w-full max-w-[1400px]">
         <div className="flex justify-between mb-4">
           <div>
             <span>
-              <span className="font-bold">{startItem} - {endItem} </span> of {filteredProducts.length} results
+              <span className="font-bold">{filteredProducts.length > 0 ? startItem : 0} - {endItem} </span> of {filteredProducts.length} results
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredProducts.slice((currentPage - 1) * itemsToShow, currentPage * itemsToShow).map((product) => (
             <Pproduct
               key={product.id}
@@ -71,7 +71,7 @@ function ListBestseller() {
           ))}
         </div>
 
-        <div className="flex justify-center mt-6">
+        <div className="flex justify-center mt-6 flex-wrap">
           {getPageNumbers().map((number, index) => (
             number === "..." ? (
               <span key={index} className="px-3 py-1 m-1 rounded">...</span>
@@ -87,8 +87,8 @@ function ListBestseller() {
           ))}
           <button
             onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className={`px-3 py-1 m-1 rounded ${currentPage === totalPages ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300'}`}
+            disabled={currentPage === totalPages || totalPages === 0}
+            className={`px-3 py-1 m-1 rounded ${currentPage === totalPages || totalPages === 0 ? 'bg-gray-200 cursor-not-allowed' : 'bg-gray-300'}`}
           >
             Next
           </button>
